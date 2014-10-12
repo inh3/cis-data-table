@@ -1,9 +1,5 @@
-div .padding-top {
-    padding-top: 100px;
-}
-
 .b-example {
-    width: 40px;
+    width: 100%;
     height: 20px;
     float: left;
     margin: auto;
@@ -12,6 +8,51 @@ div .padding-top {
     background: #BADA55;
 }
 
+.text-centered {
+   text-align: center;
+}
+
+.one-px {
+    width: 1px;
+}
+
+/* dont wrap text in table cell */
 td {
-    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* add column borders */
+table {
+    border: none;
+    border-collapse: collapse;
+}
+table td {
+    border-left: 2px solid #fff
+}
+table td:first-child, table td:nth-child(2) {
+    border-left: none;
+}
+
+/* no row top/bottom borders */
+.table th, .table td {
+     border-top: none !important;
+     border-bottom: none !important;
+ }
+
+/* table row colors */
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+   background-color: #e9e9e9;
+}
+.table-striped > tbody > tr:nth-child(even) > td, .table-striped > tbody > tr:nth-child(even) > th {
+   background-color: #f9f9f9;
+}
+
+/* reduce padding of table */
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    padding: 4px;
+}
+
+/* reduce margin of heading */
+h4 {
+    margin: 2px;
 }
