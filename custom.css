@@ -12,6 +12,10 @@
    text-align: center;
 }
 
+.padding-top {
+    padding-left: 50px;
+}
+
 .one-px {
     width: 1px;
 }
@@ -55,4 +59,24 @@ table td:first-child, table td:nth-child(2) {
 /* reduce margin of heading */
 h4 {
     margin: 2px;
+}
+
+/* rotation of th */
+th.rotate {
+  /* Something you can count on */
+  height: 140px;
+  white-space: nowrap;
+}
+
+th.rotate > div {
+  transform:
+    /* Magic Numbers */
+    translateY(-5px)
+    /* 45 is really 360 - 45 */
+    rotate(315deg);
+  width: 30px;
+}
+th.rotate > div > span {
+  border-bottom: 1px solid #ccc;
+  padding: 5px 10px;
 }

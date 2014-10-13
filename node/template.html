@@ -19,30 +19,34 @@
   </head>
   <body>
 
-    <div class="container center padding-top">
+    <div class="padding-top">
         <div class="row">
-            <div class="col-md-2 col-md-offset-4">
+            <div class="col-md-2">
 
                 <table class="table table-striped table-condensed">
                     <thead>
                         <tr>
                             <th></th>
                             <th></th>
-                            {{#tumorData}}
-                            <th class="text-centered">{{name}}</th>
-                            {{/tumorData}}
+                            {{#each tumorData}}
+                            <th class="text-centered rotate"><div><span>{{name}}</span></div></th>
+                            {{/each}}
                         </tr>
                     </thead>
                     <tbody>
-                        {{#gcisData}}
+                        {{#each gcisData}}
                          <tr>
                             <td class="one-px"><b>{{id}}</b></td>
                             <td class="one-px text-centered"><span class="label label-danger">{{tumorCount}}</span></td>
-                            <td></td>
-                            <td><div class="b-example"/></td>
-                            <td></td>
+                            {{#each tumors}}
+                                {{#if hasTumor}}
+                                    <td><div class="b-example"/></td>
+                                {{else}}
+                                    <td></td>
+                                {{/if}}
+                            {{/each}}
                         </tr>
-                        {{/gcisData}}
+                        {{/each}}
                     </tbody>
                 </table>
 

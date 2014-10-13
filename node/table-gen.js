@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-var mu = require('mu2');
-mu.root = __dirname;
+var Handlebars = require('handlebars');
+console.log(Handlebars);
 
 var gcisData = [];
 var gcisLookup = {};
@@ -50,11 +50,11 @@ function readTumorsFile() {
             lineColumns.forEach(function(element, index) {
                 element = element.trim();
                 if(element === 'x') {
-                    gcisData[index]["tumors"].push({ "valid": true });
+                    gcisData[index]["tumors"].push({ "hasTumor": true });
                     gcisData[index]["tumorCount"]++;
                 }
                 else {
-                    gcisData[index]["tumors"].push({ "valid": false });
+                    gcisData[index]["tumors"].push({ "hasTumor": false });
                 }
             });
         }
@@ -66,17 +66,18 @@ function readTumorsFile() {
 }
 
 function buildHtmlFile() {
-    var fileData = '';
-    mu.compileAndRender('template.html', {
+
+    var fileContents = fs.readFileSync("template.html").toString();
+    var template = Handlebars.compile(fileContents);
+
+    var dataHtml = template({
         "tumorData": tumorData,
         "gcisData": gcisData
-    }).on('data', function(data) {
-        fileData += data.toString();
-    }).on('end', function() {
-        fs.writeFile(__dirname + "\\..\\" + "data.html", fileData, function(error) {
-            if (error) throw error
-            console.log("data.html is written!");
-        })
+    })
+
+    fs.writeFile(__dirname + "\\..\\" + "data.html", dataHtml, function(error) {
+        if (error) throw error
+        console.log("data.html is written!");
     });
 }
 
