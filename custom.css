@@ -5,7 +5,7 @@
     margin: auto;
 
     border-radius: 5px;
-    background: #BADA55;
+    background: #3366FF;
 }
 
 .text-centered {
@@ -33,7 +33,10 @@ table {
 table td {
     border-left: 2px solid #fff
 }
-table td:first-child, table td:nth-child(2) {
+/*table td:first-child, table td:nth-child(2) {
+    border-left: none;
+}*/
+table td:first-child {
     border-left: none;
 }
 
@@ -72,6 +75,7 @@ th.rotate > div {
   transform:
     /* Magic Numbers */
     translateY(-5px)
+    translateX(7px)
     /* 45 is really 360 - 45 */
     rotate(315deg);
   width: 30px;
