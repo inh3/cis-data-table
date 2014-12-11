@@ -27,6 +27,7 @@
                     <thead>
                         <tr>
                             <th></th>
+                            <th></th>
                             {{#each geneColumns}}
                             <th class="text-centered rotate"><div><b>{{id}}</b></div><span class="label label-success">{{tumorCount}}</span></th>
                             {{/each}}
@@ -35,7 +36,8 @@
                     <tbody>
                         {{#each tumorRows}}
                          <tr>
-                            <td class="one-px"><b>{{name}}</b></td>
+                            <td class="one-px text-right"><div><b>{{name}}</b></div></td>
+                            <td class="one-px text-centered"><span class="label label-default">{{pathology}}</span></td>
                             {{#each genes}}
                                 {{#if hasTumor}}
                                     <td><div class="b-example"/></td>

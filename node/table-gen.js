@@ -1,4 +1,7 @@
+
+var os = require('os');
 var fs = require('fs');
+var path = require('path');
 
 var Handlebars = require('handlebars');
 //console.log(Handlebars);
@@ -6,6 +9,7 @@ var Handlebars = require('handlebars');
 var gcisData = [];
 var gcisLookup = {};
 var tumorData = [];
+var tumorMap = {};
 
 function debugGcisData() {
     gcisData.forEach(function(element, index) {
@@ -17,8 +21,32 @@ function debugGcisData() {
     });
 }
 
+function readTumorMapFile() {
+    //var fileName = path.join(__dirname, 'test.csv');
+    var fileName = path.join(__dirname, '37_tumors_pathology.csv');
+    var fileContents = fs.readFileSync(fileName).toString();
+    var fileLines = fileContents.split("\n");
+
+    fileLines.forEach(function(element, index) {
+        lineColumns = element.split(',');
+
+        // fix mistake with tumor
+        if(lineColumns[0] == 'G447T5') {
+            lineColumns[0] = 'G447T9'
+        }
+
+        tumorMap[lineColumns[0]] = {
+            "pathology": lineColumns[2],
+            "has_match": false
+        };
+    });
+
+    //console.log(tumorMap);
+    console.log("Tumor Map Size: " + Object.keys(tumorMap).length);
+}
+
 function readTumorsFile() {
-    var fileName = __dirname + '\\' + 'tumors.csv';
+    var fileName = path.join(__dirname, 'tumors.csv');
     var fileContents = fs.readFileSync(fileName).toString();
     var fileLines = fileContents.split(/\n/);
 
@@ -71,7 +99,7 @@ var geneColumns = [];
 var tumorRows = [];
 
 function readTumorsFileTransposed() {
-    var fileName = __dirname + '\\' + 'tumors.csv';
+    var fileName = path.join(__dirname, 'tumors.csv');
     var fileContents = fs.readFileSync(fileName).toString();
     var fileLines = fileContents.split(/\n/);
 
@@ -93,9 +121,19 @@ function readTumorsFileTransposed() {
 
         if(tumorName.length > 0) {
 
+            //console.log(tumorName);
+            //console.log(tumorMap[tumorName]);
+            //console.log('');
+            pathology = undefined;
+            if(tumorMap[tumorName]) {
+                tumorMap[tumorName].has_match = true;
+                pathology = tumorMap[tumorName].pathology;
+            }
+
             tumorRows.push({
                 "name": tumorName,
-                "genes": []
+                "genes": [],
+                "pathology": pathology
             });
             tumorRowIndex = tumorRows.length - 1;
 
@@ -130,7 +168,7 @@ function buildHtmlFile() {
         "gcisData": gcisData
     })
 
-    fs.writeFile(__dirname + "\\..\\" + "data.html", dataHtml, function(error) {
+    fs.writeFile(path.join(__dirname, "..", "data.html"), dataHtml, function(error) {
         if (error) throw error
         console.log("data.html is written!");
     });
@@ -146,7 +184,7 @@ function buildHtmlFileTransposed() {
         "geneColumns": geneColumns
     })
 
-    fs.writeFile(__dirname + "\\..\\" + "data-2.html", dataHtml, function(error) {
+    fs.writeFile(path.join(__dirname, "..", "data-2.html"), dataHtml, function(error) {
         if (error) throw error
         console.log("data-2.html is written!");
     });
@@ -156,5 +194,8 @@ function buildHtmlFileTransposed() {
 //readTumorsFile();
 //buildHtmlFile();
 
+readTumorMapFile();
 readTumorsFileTransposed();
 buildHtmlFileTransposed();
+
+//console.log(tumorMap);

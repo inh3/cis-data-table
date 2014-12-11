@@ -12,6 +12,10 @@
    text-align: center;
 }
 
+.text-right {
+   text-align: right;
+}
+
 .padding-top {
     padding-left: 50px;
 }
@@ -33,12 +37,13 @@ table {
 table td {
     border-left: 2px solid #fff
 }
-/*table td:first-child, table td:nth-child(2) {
+table td:first-child, table td:nth-child(2) {
+    border-left: none;
+    background-color: transparent !important;
+}
+/*table td:first-child {
     border-left: none;
 }*/
-table td:first-child {
-    border-left: none;
-}
 
 /* no row top/bottom borders */
 .table th, .table td {
